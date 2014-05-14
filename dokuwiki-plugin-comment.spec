@@ -4,7 +4,7 @@
 Summary:	DokuWiki plugin to add Add comments/notes to your wiki source
 Name:		dokuwiki-plugin-%{plugin}
 Version:	20090206
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	https://github.com/dokufreaks/plugin-comment/tarball/2009-02-06/%{plugin}-%{version}.tgz
@@ -13,7 +13,7 @@ URL:		http://www.dokuwiki.org/plugin:comment
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.520
 Requires:	dokuwiki >= 20061106
-Requires:	php-common >= 4:%{php_min_version}
+Requires:	php(core) >= %{php_min_version}
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
