@@ -1,18 +1,20 @@
+%define		subver	2016-04-26
+%define		ver		%(echo %{subver} | tr -d -)
 %define		plugin		comment
 %define		php_min_version 5.0.0
 %include	/usr/lib/rpm/macros.php
 Summary:	DokuWiki plugin to add Add comments/notes to your wiki source
 Name:		dokuwiki-plugin-%{plugin}
-Version:	20090206
-Release:	2
+Version:	%{ver}
+Release:	1
 License:	GPL v2
 Group:		Applications/WWW
-Source0:	https://github.com/dokufreaks/plugin-comment/tarball/2009-02-06/%{plugin}-%{version}.tgz
-# Source0-md5:	aded94aa800d880bf48a0f135ccc34a6
-URL:		http://www.dokuwiki.org/plugin:comment
+Source0:	https://github.com/dokufreaks/plugin-comment/archive/153b1e8c/%{plugin}-%{version}.tar.gz
+# Source0-md5:	59723717caa4becfa51a6c0f02f5387c
+URL:		https://www.dokuwiki.org/plugin:comment
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.520
-Requires:	dokuwiki >= 20061106
+Requires:	dokuwiki >= 20131208
 Requires:	php(core) >= %{php_min_version}
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -30,8 +32,9 @@ the wiki page. The syntax is like C and PHP.
 %setup -qc
 mv *-%{plugin}-*/* .
 
-version=$(cat VERSION)
-if [ "$(echo "$version" | tr -d -)" != %{version} ]; then
+%build
+version=$(awk '/^date/{print $2}' plugin.info.txt)
+if [ "$(echo "$version" | tr -d '\r-')" != %{version} ]; then
 	: %%{version} mismatch
 	exit 1
 fi
@@ -40,7 +43,7 @@ fi
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{plugindir}
 cp -a . $RPM_BUILD_ROOT%{plugindir}
-%{__rm} $RPM_BUILD_ROOT%{plugindir}/{COPYING,README,VERSION}
+%{__rm} $RPM_BUILD_ROOT%{plugindir}/{COPYING,README}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -50,3 +53,4 @@ rm -rf $RPM_BUILD_ROOT
 %doc README
 %dir %{plugindir}
 %{plugindir}/*.php
+%{plugindir}/*.txt
