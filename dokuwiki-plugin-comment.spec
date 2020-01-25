@@ -2,7 +2,6 @@
 %define		ver		%(echo %{subver} | tr -d -)
 %define		plugin		comment
 %define		php_min_version 5.0.0
-%include	/usr/lib/rpm/macros.php
 Summary:	DokuWiki plugin to add Add comments/notes to your wiki source
 Name:		dokuwiki-plugin-%{plugin}
 Version:	%{ver}
